@@ -11,17 +11,19 @@ public static class SoundPlay
 {
     //Gets random file in given directory with a specific extension
     public static string GetRandomFile(string soundsDir, ManualLogSource Logger)
-    {
+    {  
+        //Taken and edited from here: https://stackoverflow.com/a/754504
         string filePath = null;
         if (!string.IsNullOrEmpty(soundsDir))
         {
-            var extensions = new string[] { ".m4a", ".mp3", ".wav", ".ogg" };
+            var extensions = new string[] { ".m4a", ".mp3", ".wav", ".ogg" }; //Allowed types (JPG is not playable audio)
             try
             {
                 var dir = new DirectoryInfo(soundsDir);
-                var sounds = dir.GetFiles("*.*").Where(f => extensions.Contains(f.Extension.ToLower()));
+                var soundFiles = dir.GetFiles("*.*").Where(f => extensions.Contains(f.Extension.ToLower()));
                 System.Random rand = new System.Random();
-                filePath = sounds.ElementAt(rand.Next(0, sounds.Count())).FullName;
+                //I wanted to make seed from system time, but it does it itself actually. Cool.
+                filePath = soundFiles.ElementAt(rand.Next(0, soundFiles.Count())).FullName;
             }
             catch (Exception e)
             {
@@ -50,8 +52,10 @@ public static class SoundPlay
             case ".ogg":
                 fileType = AudioType.OGGVORBIS;
                 break;
+            default:
+                Logger.LogError($"Unknown file type: {ext}");
+                break;
         }
-        Logger.LogError($"Unknown file type: {fileType}");
         return fileType;
     }
 
