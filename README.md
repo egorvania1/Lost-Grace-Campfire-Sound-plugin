@@ -8,6 +8,7 @@ Unpack into `/PEAK_GAME_LOCATION/` folder, merge it with BepInEx and mod should 
 ## Adding your sounds
 Place your sound files in `/PEAK_GAME_LOCATION/BepInEx/plugins/lostgracesoundplugin` <br>
 By default, mod ships with `lostgrace.mp3` <br>
+Random sound will be picked and played upon lighting a campfire <br>
 
 ### Supported file types:
 - `.mp3`
