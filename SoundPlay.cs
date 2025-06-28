@@ -37,25 +37,28 @@ public static class SoundPlay
     public static AudioType GetAudioType(string filePath, ManualLogSource Logger)
     {
         AudioType fileType = AudioType.UNKNOWN;
-        string ext = Path.GetExtension(filePath);
-        switch (ext)
+        if (!string.IsNullOrEmpty(filePath))
         {
-            case ".mp3":
-                fileType = AudioType.MPEG;
-                break;
-            case ".aiff":
-            case ".aif":
-                fileType = AudioType.AIFF;
-                break;   
-            case ".wav":
-                fileType = AudioType.AIFF;
-                break;
-            case ".ogg":
-                fileType = AudioType.OGGVORBIS;
-                break;
-            default: //Shouldn't happen
-                Logger.LogError($"Unknown file type: {ext}");
-                break;
+            string ext = Path.GetExtension(filePath);
+            switch (ext)
+            {
+                case ".mp3":
+                    fileType = AudioType.MPEG;
+                    break;
+                case ".aiff":
+                case ".aif":
+                    fileType = AudioType.AIFF;
+                    break;
+                case ".wav":
+                    fileType = AudioType.WAV;
+                    break;
+                case ".ogg":
+                    fileType = AudioType.OGGVORBIS;
+                    break;
+                default: //Shouldn't happen
+                    Logger.LogError($"Unknown file type: {ext}");
+                    break;
+            }
         }
         return fileType;
     }
@@ -63,7 +66,8 @@ public static class SoundPlay
     //Plays the sound
     public static void PlaySound(string filePath, AudioType fileType, ManualLogSource Logger, Campfire __instance)
     {
-        if (__instance.loop && !string.IsNullOrEmpty(filePath))
+        //Only try to play sound if we have file path, we know file type and for some internal game reason (just in case)
+        if (__instance.loop && !string.IsNullOrEmpty(filePath) && fileType != AudioType.UNKNOWN)
         {
             //Taken from: https://github.com/susy-bakaa/LCSoundTool/blob/main/Utilities/AudioUtility.cs
             AudioClip clip = null;
