@@ -16,7 +16,7 @@ public static class SoundPlay
         string filePath = null;
         if (!string.IsNullOrEmpty(soundsDir))
         {
-            var extensions = new string[] { ".m4a", ".mp3", ".wav", ".ogg" }; //Allowed types (JPG is not playable audio)
+            var extensions = new string[] { ".mp3", ".aiff", ".aif", ".wav", ".ogg" }; //Allowed types (JPG is not playable audio)
             try
             {
                 var dir = new DirectoryInfo(soundsDir);
@@ -40,19 +40,20 @@ public static class SoundPlay
         string ext = Path.GetExtension(filePath);
         switch (ext)
         {
-            case ".m4a":
-                fileType = AudioType.MPEG;
-                break;
             case ".mp3":
                 fileType = AudioType.MPEG;
                 break;
+            case ".aiff":
+            case ".aif":
+                fileType = AudioType.AIFF;
+                break;   
             case ".wav":
-                fileType = AudioType.WAV;
+                fileType = AudioType.AIFF;
                 break;
             case ".ogg":
                 fileType = AudioType.OGGVORBIS;
                 break;
-            default:
+            default: //Shouldn't happen
                 Logger.LogError($"Unknown file type: {ext}");
                 break;
         }
