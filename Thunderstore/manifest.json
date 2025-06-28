@@ -1,6 +1,6 @@
 {
     "name": "LostGraceCampfireSound",
-    "version_number": "1.0.1",
+    "version_number": "1.1.0",
     "website_url": "https://github.com/egorvania1/Lost-Grace-Campfire-Sound-plugin",
     "description": "Adds Lost Grace sound to Campfire when lit ",
     "dependencies": [
