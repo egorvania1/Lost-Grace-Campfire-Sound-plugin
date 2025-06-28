@@ -9,9 +9,17 @@ namespace LostGraceSoundPlugin;
 
 public static class SoundPlay
 {
+    //TODO: "Rigged" randomness
+    //Current random could play the same file multiple times in a row, and forget about others
+    //In my testing, it took 15 tries to get mp3 randomly played (I had 4 valid sound files, all different extensions)
+
+    //TODO: Sync sounds between players
+    //Currently, even if all players in lobby will have same sounds in their mod directory,
+    //random (most likely) will play different sound for everyone
+    
     //Gets random file in given directory with a specific extension
     public static string GetRandomFile(string soundsDir, ManualLogSource Logger)
-    {  
+    {
         //Taken and edited from here: https://stackoverflow.com/a/754504
         string filePath = null;
         if (!string.IsNullOrEmpty(soundsDir))
